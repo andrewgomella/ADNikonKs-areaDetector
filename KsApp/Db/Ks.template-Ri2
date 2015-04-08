@@ -1,0 +1,750 @@
+# Database for the records specific to the Ri2 detector
+# Note: This only differs from the Qi2 in the Format record values
+
+##############################################################################
+#Write limits to Gain and AcquireTime records from AreaDetector base class   #
+##############################################################################
+
+record(ao, "$(P)$(R)AcquireTime")
+{
+   field(HOPR, "120")
+   field(LOPR, ".0001")
+   field(PREC, "3")
+}
+
+record(ao, "$(P)$(R)Gain")
+{
+   field(HOPR, "6400")
+   field(LOPR, "100")
+   field(PREC, "0")
+}
+
+##############################################################################
+#  Camera Settings                                                           #
+##############################################################################
+
+record(mbbo, "$(P)$(R)ExposureMode")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)EXPOSURE_MODE")
+   field(ZRST, "ContinuousAE")
+   field(ZRVL, "0")
+   field(ONST, "Manual")
+   field(ONVL, "2")
+   field(TWST, "MultiExposureTime")
+   field(TWVL, "3")
+   #field(THST, "MultiExposureTime")
+   #field(THVL, "3")
+}
+
+record(mbbi, "$(P)$(R)ExposureMode_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)EXPOSURE_MODE")
+   field(ZRST, "ContinuousAE")
+   field(ZRVL, "0")
+   field(ONST, "Manual")
+   field(ONVL, "2")
+   field(TWST, "MultiExposureTime")
+   field(TWVL, "3")
+   field(THST, "OnePushAE") #don't allow user to set this
+   field(THVL, "1")
+}
+
+record(mbbo, "$(P)$(R)Format")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)FORMAT")
+   field(ZRST, "4908x3264 Full RGB")
+   field(ZRVL, "0")
+   field(ONST, "2454x1632 ROI 1/2 of Full RGB")
+   field(ONVL, "1")
+   field(TWST, "1636x1088 Bin3 of Full RGB ")
+   field(TWVL, "2")
+   field(THST, "818x544 ROI 1/2 of Bin3 RGB")
+   field(THVL, "3")
+   field(FRST, "1608x1608 Center Scan RGB")
+   field(FRVL, "4")
+   field(FVST, "804x804 ROI 1/2 of Center RGB")
+   field(FVVL, "5")
+   field(SXST, "536x536 Bin3 of Center RGB")
+   field(SXVL, "6")
+   field(SVST, "4908x3264 Full YUV444")
+   field(SVVL, "7")
+   field(EIST, "2454x1632 ROI 1/2 of Full YUV444")
+   field(EIVL, "8")
+   field(NIST, "1636x1088 Bin3 of Full YUV444")
+   field(NIVL, "9")
+   field(TEST, "818x544 ROI 1/2 of Bin3 YUV444")
+   field(TEVL, "10")
+   field(ELST, "1608x1608 Center Scan YUV444")
+   field(ELVL, "11")
+   field(TVST, "804x804 ROI 1/2 of Center YUV444")
+   field(TVVL, "12")
+   field(TTST, "536x536 Bin3 of Center YUV444")
+   field(TTVL, "13")
+}
+
+record(mbbi, "$(P)$(R)Format_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)FORMAT")
+   field(ZRST, "4908x3264 Full RGB")
+   field(ZRVL, "0")
+   field(ONST, "2454x1632 ROI 1/2 of Full RGB")
+   field(ONVL, "1")
+   field(TWST, "1636x1088 Bin3 of Full RGB ")
+   field(TWVL, "2")
+   field(THST, "818x544 ROI 1/2 of Bin3 RGB")
+   field(THVL, "3")
+   field(FRST, "1608x1608 Center Scan RGB")
+   field(FRVL, "4")
+   field(FVST, "804x804 ROI 1/2 of Center RGB")
+   field(FVVL, "5")
+   field(SXST, "536x536 Bin3 of Center RGB")
+   field(SXVL, "6")
+   field(SVST, "4908x3264 Full YUV444")
+   field(SVVL, "7")
+   field(EIST, "2454x1632 ROI 1/2 of Full YUV444")
+   field(EIVL, "8")
+   field(NIST, "1636x1088 Bin3 of Full YUV444")
+   field(NIVL, "9")
+   field(TEST, "818x544 ROI 1/2 of Bin3 YUV444")
+   field(TEVL, "10")
+   field(ELST, "1608x1608 Center Scan YUV444")
+   field(ELVL, "11")
+   field(TVST, "804x804 ROI 1/2 of Center YUV444")
+   field(TVVL, "12")
+   field(TTST, "536x536 Bin3 of Center YUV444")
+   field(TTVL, "13")
+}
+
+record(mbbo, "$(P)$(R)NikonTriggerMode")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)NIKON_TRIGGER_MODE")
+   field(ZRST, "Live")
+   field(ZRVL, "0")
+   field(ONST, "Hard")
+   field(ONVL, "1")
+   field(TWST, "Soft")
+   field(TWVL, "2")
+}
+
+record(mbbi, "$(P)$(R)NikonTriggerMode_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)NIKON_TRIGGER_MODE")
+   field(ZRST, "Live")
+   field(ZRVL, "0")
+   field(ONST, "Hard")
+   field(ONVL, "1")
+   field(TWST, "Soft")
+   field(TWVL, "2")
+}
+
+record(mbbo, "$(P)$(R)CaptureMode")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)CAPTURE_MODE")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "ON")
+   field(ONVL, "1")
+}
+
+record(mbbi, "$(P)$(R)CaptureMode_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)CAPTURE_MODE")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "ON")
+   field(ONVL, "1")
+}
+
+record(mbbo, "$(P)$(R)SignalExposureEnd")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SIGNAL_EXPOSURE_END")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+   field(TWST, "Last")
+   field(TWVL, "2")
+}
+
+record(mbbi, "$(P)$(R)SignalExposureEnd_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SIGNAL_EXPOSURE_END")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+   field(TWST, "Last")
+   field(TWVL, "2")
+}
+
+record(mbbo, "$(P)$(R)TriggerReady")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SIGNAL_TRIGGER_READY")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+}
+
+record(mbbi, "$(P)$(R)TriggerReady_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SIGNAL_TRIGGER_READY")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+}
+
+record(mbbo, "$(P)$(R)SignalDeviceCapture")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SIGNAL_DEVICE_CAPTURE")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+}
+
+record(mbbi, "$(P)$(R)SignalDeviceCapture_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SIGNAL_DEVICE_CAPTURE")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+}
+
+record(mbbo, "$(P)$(R)ExposureOutput")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)EXPOSURE_OUTPUT")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+   field(TWST, "Last")
+   field(TWVL, "2")
+}
+
+record(mbbi, "$(P)$(R)ExposureOutput_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)EXPOSURE_OUTPUT")
+   field(ZRST, "OFF")
+   field(ZRVL, "0")
+   field(ONST, "OUTPUT")
+   field(ONVL, "1")
+   field(TWST, "Last")
+   field(TWVL, "2")
+}
+
+
+record(mbbo, "$(P)$(R)ExposureBias")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)EXPOSURE_BIAS")
+   field(ZRST, "-1EV")
+   field(ZRVL, "-6")
+   field(ONST, "-5/6EV")
+   field(ONVL, "-5")
+   field(TWST, "-2/3EV")
+   field(TWVL, "-4")
+   field(THST, "-1/2EV")
+   field(THVL, "-3")
+   field(FRST, "-1/3EV")
+   field(FRVL, "-2")
+   field(FVST, "-1/6EV")
+   field(FVVL, "1")
+   field(SXST, "0EV")
+   field(SXVL, "0")
+   field(SVST, "1/6EV")
+   field(SVVL, "1")
+   field(EIST, "+1/3EV")
+   field(EIVL, "2")
+   field(NIST, "+1/2EV")
+   field(NIVL, "3")
+   field(TEST, "+2/3EV")
+   field(TEVL, "4")
+   field(ELST, "+5/6EV")
+   field(ELVL, "5")
+   field(TVST, "+1EV")
+   field(TVVL, "6")
+}
+
+record(mbbi, "$(P)$(R)ExposureBias_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)EXPOSURE_BIAS")
+   field(ZRST, "-1EV")
+   field(ZRVL, "-6")
+   field(ONST, "-5/6EV")
+   field(ONVL, "-5")
+   field(TWST, "-2/3EV")
+   field(TWVL, "-4")
+   field(THST, "-1/2EV")
+   field(THVL, "-3")
+   field(FRST, "-1/3EV")
+   field(FRVL, "-2")
+   field(FVST, "-1/6EV")
+   field(FVVL, "1")
+   field(SXST, "0EV")
+   field(SXVL, "0")
+   field(SVST, "1/6EV")
+   field(SVVL, "1")
+   field(EIST, "+1/3EV")
+   field(EIVL, "2")
+   field(NIST, "+1/2EV")
+   field(NIVL, "3")
+   field(TEST, "+2/3EV")
+   field(TEVL, "4")
+   field(ELST, "+5/6EV")
+   field(ELVL, "5")
+   field(TVST, "+1EV")
+   field(TVVL, "6")
+}
+
+record(longout, "$(P)$(R)TriggerFrameCt")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)TRIGGER_OPTION_FRAME_CT")
+   field(HOPR, "65535")
+   field(LOPR, "1")
+}
+
+record(longin, "$(P)$(R)TriggerFrameCt_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)TRIGGER_OPTION_FRAME_CT")
+}
+
+record(longout, "$(P)$(R)TriggerDelay")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)TRIGGER_OPTION_DELAY")
+   field(HOPR, "0")
+   field(LOPR, "-1600")
+}
+
+record(longin, "$(P)$(R)TriggerDelay_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)TRIGGER_OPTION_DELAY")
+}
+
+record(longout, "$(P)$(R)ROIX")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)ROIX")
+}
+
+record(longin, "$(P)$(R)ROIX_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)ROIX")
+}
+
+record(longout, "$(P)$(R)ROIY")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)ROIY")
+}
+
+record(longin, "$(P)$(R)ROIY_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)ROIY")
+}
+
+##############################################################################
+#  Detector Information                                                      #
+##############################################################################
+
+record(mbbi, "$(P)$(R)SignalEvent")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SIGNAL_EVENT")
+   field(ZRST, "Exposure End")
+   field(ZRVL, "0")
+   field(ONST, "Trigger Ready")
+   field(ONVL, "1")
+   field(TWST, "Device Capture")
+   field(TWVL, "2")
+   field(THST, "Ae Stay")
+   field(THVL, "3")
+   field(FRST, "Ae Running")
+   field(FRVL, "4")
+   field(FVST, "Ae Disable")
+   field(FVVL, "5")
+}
+
+record(ai, "$(P)$(R)NikonFrameRate") 
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynFloat64")
+  field(PREC, "2")
+  field(INP,  "@asyn($(PORT) 0)NIKON_FRAME_RATE")
+}
+
+record(stringin, "$(P)$(R)FirmwareVersion")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)FW_VERSION")
+}
+
+record(stringin, "$(P)$(R)FgpaVersion")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)FPGA_VERSION")
+}
+
+record(stringin, "$(P)$(R)Fx3Version")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)FX3_VERSION")
+}
+
+record(stringin, "$(P)$(R)UsbVersion")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)USB_VERSION")
+}
+
+record(stringin, "$(P)$(R)DriverVersion")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)DRIVER_VERSION")
+}
+
+record(stringin, "$(P)$(R)SDKVersion")
+{
+  field(SCAN, "I/O Intr")
+  field(DTYP, "asynOctetRead")
+  field(INP,  "@asyn($(PORT) 0)SDK_VERSION")
+}
+
+##############################################################################
+#  Detector commands                                                         #
+##############################################################################
+
+record(bo, "$(P)$(R)SoftTrigger") {
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SOFT_TRIGGER")
+}
+
+record(bo, "$(P)$(R)TriggerCancel") {
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)TRIGGER_CANCEL")
+}
+
+record(bo, "$(P)$(R)FrameDropless") {
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)FRAME_DROPLESS")
+}
+
+record(bi, "$(P)$(R)FrameDropless_RBV") {
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)FRAME_DROPLESS")
+}
+
+##############################################################################
+#  Automatic Exposure Settings                                               #
+##############################################################################
+
+record(mbbo, "$(P)$(R)MeteringMode")
+{
+   #field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)METERING_MODE")
+   field(ZRST, "Average")
+   field(ZRVL, "0")
+   field(ONST, "Peak")
+   field(ONVL, "1")
+}
+
+record(mbbi, "$(P)$(R)MeteringMode_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)METERING_MODE")
+   field(ZRST, "Average")
+   field(ZRVL, "0")
+   field(ONST, "Peak")
+   field(ONVL, "1")
+}
+
+record(ao, "$(P)$(R)ExposureTimeLimit")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynFloat64")
+   field(OUT,  "@asyn($(PORT) 0)EXPOSURE_TIME_LIMIT")
+   field(HOPR, "1")
+   field(LOPR, ".03")
+   field(PREC, "3")
+}
+
+record(ai, "$(P)$(R)ExposureTimeLimit_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynFloat64")
+   field(INP,  "@asyn($(PORT) 0)EXPOSURE_TIME_LIMIT")
+   field(PREC, "3")
+}
+
+record(longout, "$(P)$(R)GainLimit")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)GAIN_LIMIT")
+   field(HOPR, "1600")
+   field(LOPR, "200")
+}
+
+record(longin, "$(P)$(R)GainLimit_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)GAIN_LIMIT")
+}
+
+record(longout, "$(P)$(R)Brightness")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)BRIGHTNESS")
+}
+
+record(longin, "$(P)$(R)Brightness_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)BRIGHTNESS")
+}
+
+record(longout, "$(P)$(R)MeteringAreaLeft")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)METERING_AREA_LEFT")
+}
+
+record(longin, "$(P)$(R)MeteringAreaLeft_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)METERING_AREA_LEFT")
+}
+
+record(longout, "$(P)$(R)MeteringAreaTop")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)METERING_AREA_TOP")
+}
+
+record(longin, "$(P)$(R)MeteringAreaTop_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)METERING_AREA_TOP")
+}
+
+record(longout, "$(P)$(R)MeteringAreaWidth")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)METERING_AREA_WIDTH")
+}
+
+record(longin, "$(P)$(R)MeteringAreaWidth_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)METERING_AREA_WIDTH")
+}
+
+record(longout, "$(P)$(R)MeteringAreaHeight")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)METERING_AREA_HEIGHT")
+}
+
+record(longin, "$(P)$(R)MeteringAreaHeight_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)METERING_AREA_HEIGHT")
+}
+
+##############################################################################
+#  Ri2 Only Settings                                                         #
+##############################################################################
+
+record(longout, "$(P)$(R)Sharpness")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SHARPNESS")
+}
+
+record(longin, "$(P)$(R)Sharpness_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SHARPNESS")
+}
+
+record(longout, "$(P)$(R)Hue")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)HUE")
+}
+
+record(longin, "$(P)$(R)Hue_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)HUE_RBV")
+}
+
+record(longout, "$(P)$(R)Saturation")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)SATURATION")
+}
+
+record(longin, "$(P)$(R)Saturation_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)SATURATION")
+}
+
+record(longout, "$(P)$(R)WhiteBalanceRed")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)WHITE_BALANCE_RED")
+}
+
+record(longin, "$(P)$(R)WhiteBalanceRed_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)WHITE_BALANCE_RED")
+}
+
+record(longout, "$(P)$(R)WhiteBalanceBlue")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)WHITE_BALANCE_BLUE")
+}
+
+record(longin, "$(P)$(R)WhiteBalanceBlue_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)WHITE_BALANCE_BLUE")
+}
+
+record(mbbo, "$(P)$(R)ColorPreset")
+{
+   field(PINI, "YES")
+   field(DTYP, "asynInt32")
+   field(OUT,  "@asyn($(PORT) 0)COLOR_PRESET")
+   field(ZRST, "Default")
+   field(ZRVL, "0")
+   field(ONST, "WaferIc")
+   field(ONVL, "16")
+   field(TWST, "Metal")
+   field(TWVL, "17")
+   field(THST, "CircuitBoard")
+   field(THVL, "18")
+   field(FRST, "FPD")
+   field(FRVL, "19")
+   field(FVST, "BioBrightField")
+   field(FVVL, "32")
+   field(SXST, "BioHe")
+   field(SXVL, "33")
+   field(SVST, "BioEla")
+   field(SVVL, "34")
+   field(EIST, "BioLedBrightField")
+   field(EIVL, "48")
+   field(NIST, "Asbestos")
+   field(NIVL, "64")
+}
+
+record(mbbi, "$(P)$(R)ColorPreset_RBV")
+{
+   field(SCAN, "I/O Intr")
+   field(DTYP, "asynInt32")
+   field(INP,  "@asyn($(PORT) 0)COLOR_PRESET")
+   field(ZRST, "Default")
+   field(ZRVL, "0")
+   field(ONST, "WaferIc")
+   field(ONVL, "16")
+   field(TWST, "Metal")
+   field(TWVL, "17")
+   field(THST, "CircuitBoard")
+   field(THVL, "18")
+   field(FRST, "FPD")
+   field(FRVL, "19")
+   field(FVST, "BioBrightField")
+   field(FVVL, "32")
+   field(SXST, "BioHe")
+   field(SXVL, "33")
+   field(SVST, "BioEla")
+   field(SVVL, "34")
+   field(EIST, "BioLedBrightField")
+   field(EIVL, "48")
+   field(NIST, "Asbestos")
+   field(NIVL, "64")
+}
