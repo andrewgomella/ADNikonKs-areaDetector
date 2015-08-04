@@ -96,7 +96,7 @@ std::map<int, std::string> KsErrorMap = {{ 0,   "LX_OK"},
                                          {-10,  "LX_ERR_ACCESSDENIED"}
                                         };
 
-/* Driver for Nikon DS-Qi2 and DS-Ri2 cameras using their KsCam SDK library */
+/* Driver for Nikon DS-Qi2 and DS-Ri2 cameras using the KsCam SDK library */
 static const char *driverName = "KsCam";
 class KsCam : public ADDriver
 {
@@ -183,6 +183,7 @@ private:
     void       GetAllFeaturesDesc();
     void       Command(const lx_wchar* wszCommand);
     void       GetDropless();
+    void       onBusReset(lx_uint32 busResetCode, lx_uint32 imageCleared);
 
     /* utility functions copied from Nikon example code */
     void       PrintAllFeatures();
@@ -476,6 +477,7 @@ void KsCam::DoEvent(const lx_uint32 uiCameraHandle, CAM_Event* pstEvent, void* p
             asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "%s:%s: BusReset eBusResetCode:%i bImageCleared:%i\n",
                       driverName, functionName, pstEvent->stBusReset.eBusResetCode, pstEvent->stBusReset.bImageCleared );
             setIntegerParam(ADStatus, ADStatusDisconnected);
+            onBusReset(pstEvent->stBusReset.eBusResetCode, pstEvent->stBusReset.bImageCleared);
             break;
         default:
             asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "%s:%s: Unknown Event %d\n",
@@ -485,6 +487,31 @@ void KsCam::DoEvent(const lx_uint32 uiCameraHandle, CAM_Event* pstEvent, void* p
     callParamCallbacks();
     asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,"%s:%s: End Callback-DoEvent, EventNum=%i\n",
               driverName, functionName, pstEvent->eEventType);
+}
+
+/* closely copied from kscam example */
+void KsCam::onBusReset(lx_uint32 busReset, lx_uint32 imageCleared)
+{
+    static const char *functionName = "onBusReset";
+    std::string        strMode;
+
+    switch(busReset) {
+        case    ecebrcHappened:     strMode = "Happened";  break;
+        case    ecebrcRestored:     strMode = "Restored";  break;
+        case    ecebrcFailed:       strMode = "Failed";    break;
+        default:                    strMode = "Unknown";   break;
+    }
+    
+    //DispLog(L"####  BusReset [%s] %s", strMode, (lp) ? L"ImageCleared" : L"NotImageCleared");
+    
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,"%s:%s: BusReset: %s, ImageCleared: %i\n",
+              driverName, functionName, strMode, imageCleared);
+    //  Application mast call GetAllFeatures().
+    if ( busReset == ecebrcRestored ) {
+        GetAllFeaturesDesc();
+    }
+
+    return;
 }
 
 /* From asynPortDriver: Disconnects driver from device; */
@@ -520,6 +547,13 @@ asynStatus KsCam::disconnectCamera()
         this->m_uiCameraHandle = 0;
         this->m_isOpened = FALSE;
         g_pDlg = NULL;
+
+        if (stImage.pDataBuffer != NULL)
+        {
+            delete [] stImage.pDataBuffer;
+            stImage.pDataBuffer = NULL;
+        }
+
     }
 
     /* We've disconnected the camera. Signal to asynManager that we are disconnected. */
@@ -795,7 +829,7 @@ asynStatus KsCam::grabImage()
         nDims   = 2;
         dims[0] = pstInfo->usImageWidth;
         dims[1] = pstInfo->usImageHeight;
-        asynPrint(pasynUserSelf, ASYN_TRACE_ERROR,
+        asynPrint(pasynUserSelf, ASYN_TRACE_FLOW,
               "%s::%s Image info dim0=%i dim1=%i size=%i frameno=%i uiRemained=%i\n",
               driverName, functionName, dims[0], dims[1], dataSize, pstInfo->usFrameNo, uiRemained);
     } else {
@@ -804,7 +838,7 @@ asynStatus KsCam::grabImage()
         dims[0] = 3;
         dims[1] = pstInfo->usImageWidth;
         dims[2] = pstInfo->usImageHeight;
-        asynPrint(pasynUserSelf, ASYN_TRACE_ERROR,
+        asynPrint(pasynUserSelf, ASYN_TRACE_FLOW,
               "%s::%s Image info dim0=%i dim1=%i dim2=%i size=%i frameno=%i uiRemained=%i\n",
               driverName, functionName, dims[0], dims[1], dims[2], dataSize, pstInfo->usFrameNo, uiRemained);
     }
