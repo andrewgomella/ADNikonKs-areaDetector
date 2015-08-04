@@ -476,7 +476,6 @@ void KsCam::DoEvent(const lx_uint32 uiCameraHandle, CAM_Event* pstEvent, void* p
         case    ecetBusReset:
             asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR, "%s:%s: BusReset eBusResetCode:%i bImageCleared:%i\n",
                       driverName, functionName, pstEvent->stBusReset.eBusResetCode, pstEvent->stBusReset.bImageCleared );
-            setIntegerParam(ADStatus, ADStatusDisconnected);
             onBusReset(pstEvent->stBusReset.eBusResetCode, pstEvent->stBusReset.bImageCleared);
             break;
         default:
@@ -493,24 +492,31 @@ void KsCam::DoEvent(const lx_uint32 uiCameraHandle, CAM_Event* pstEvent, void* p
 void KsCam::onBusReset(lx_uint32 busReset, lx_uint32 imageCleared)
 {
     static const char *functionName = "onBusReset";
-    std::string        strMode;
+    const char *info = "";
 
     switch(busReset) {
-        case    ecebrcHappened:     strMode = "Happened";  break;
-        case    ecebrcRestored:     strMode = "Restored";  break;
-        case    ecebrcFailed:       strMode = "Failed";    break;
-        default:                    strMode = "Unknown";   break;
+        case    ecebrcHappened:     
+            info = "USB BUS was reset!";  
+            setIntegerParam(ADStatus, ADStatusDisconnected);
+            break;
+        case    ecebrcRestored:
+            GetAllFeaturesDesc(); 
+            info = "USB BUS was restored!";
+            setIntegerParam(ADStatus, ADStatusIdle);
+            break;
+        case    ecebrcFailed:       
+            info = "USB BUS failed to restore!";
+            setIntegerParam(ADStatus, ADStatusError);
+            break;
+        default:
+            info = "Unknown";
+            break;
     }
-    
-    //DispLog(L"####  BusReset [%s] %s", strMode, (lp) ? L"ImageCleared" : L"NotImageCleared");
-    
-    asynPrint(this->pasynUserSelf, ASYN_TRACE_FLOW,"%s:%s: BusReset: %s, ImageCleared: %i\n",
-              driverName, functionName, strMode, imageCleared);
-    //  Application mast call GetAllFeatures().
-    if ( busReset == ecebrcRestored ) {
-        GetAllFeaturesDesc();
-    }
+        
+    asynPrint(this->pasynUserSelf, ASYN_TRACE_ERROR,"%s:%s: BusReset: %s, ImageCleared: %i\n",
+              driverName, functionName, info, imageCleared);
 
+    callParamCallbacks();
     return;
 }
 
