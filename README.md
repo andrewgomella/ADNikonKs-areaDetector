@@ -3,7 +3,7 @@ ADNikonKs
 An 
 [EPICS](http://www.aps.anl.gov/epics/) 
 [areaDetector](http://cars.uchicago.edu/software/epics/areaDetector.html) 
-driver for the Nikon Qi2 camera using KsCamera SDK. [DS-Qi2](http://www.nikon.com/products/instruments/lineup/bioscience/camera_microscopy/dsqi2/index.htm)
+driver for the Nikon [DS-Qi2](https://www.nikoninstruments.com/Products/Cameras/Camera-Heads/DS-Qi2/Specifications) camera using KsCamera SDK. 
 
 Originally built with the following setup:
 	
